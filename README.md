@@ -7,4 +7,7 @@ This simple typescript class whch can be copied to your Angualr projects and Inj
     this_idxdbsvc.storeObject(storeName:string,objectItem{})
     this_idxdbsvc.getStoreItemByIndexKeyRange(storeName:string,indexName:string,IndexKeyRange:IDBKeyRange)
 ~~~
-You should Initialize anb create your database in initIdxDB() method.  
+You should Initialize and create your database in initIdxDB() method.  
+The service code created a smaple db , sample store and Index . Modify the InitIdxDB accordingly.
+
+
