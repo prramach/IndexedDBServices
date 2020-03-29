@@ -6,6 +6,11 @@ This simple typescript class whch can be copied to your Angualr projects and Inj
     this_idxdbsvc.initIdxDB()// to initialize the db store
     this_idxdbsvc.storeObject(storeName:string,objectItem{})
     this_idxdbsvc.getStoreItemByIndexKeyRange(storeName:string,indexName:string,IndexKeyRange:IDBKeyRange)
+    
+    Since All the method retruns OBservable  you should subcribe to all methods as below
+     this._idxdbsvc.getStoreItemByIndexAll("<<StoreName>","<<IndexName>>").subscribe(res=>{
+        console.log(res)
+   }
 ~~~
 You should Initialize and create your database in initIdxDB() method.  
 Ths service code created with  smaple db , sample store and Index . Modify the InitIdxDB accordingly. Once the DB setup you can Inject the service in any angualr class to interact with your DB. Make sure you pass upgarde version on each release to upgrade client stored DBs.
