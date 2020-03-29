@@ -1,6 +1,9 @@
 /**
  * @author :Prajith R.
- * IndexedDB service class
+ * @prajith_ram
+ * IndexedDB service class. 
+ * An IndexedDB Wrapper as Service for Angualr Projects. 
+ * This simple typescript class whch can be copied to your Angualr projects and Inject as a service to create and manage IndexedDB.
  */
 import { Injectable } from '@angular/core';
 import {Observable,of,Observer} from 'rxjs';
@@ -15,16 +18,17 @@ export class IndexedDBService {
 
   }
   /**
-   * init your indexedDB here
+   * init your indexedDB here. Create DB, ObjectStore and Indexes.
+   * Change below code to create yourown DB
    */
   public initIdxDB(){
       console.log("IndexedDBService:initIdxDB()")
-      let idxDB=indexedDB.open("ema")
+      let idxDB=indexedDB.open("<<DBNAme>>",1)
       idxDB.onupgradeneeded=function(){
           console.log("IndexedDBService:initIdxDB():Initiallizing IndexedDB")
           let db=idxDB.result;
-          db.createObjectStore("wosetstore",{keyPath:'id',autoIncrement:true})
-          .createIndex("status_idx",'status')
+          db.createObjectStore("<<ObjectStoreName>>",{keyPath:'id',autoIncrement:true})
+          .createIndex("<<IndexName>>",'<<IndexKey in your obectstore>>')
       }
       idxDB.onsuccess=function(){
         console.log("IndexedDBService:initIdxDB():sucess")
@@ -34,13 +38,13 @@ export class IndexedDBService {
       }
   }
   /**
-   * 
+   * Add Objects to store
    * @param stroreName Storeobjects in given store. If No DB DB will created with all required stores
    * @param objectItem 
    */
   public  storeObject(stroreName:string,objectItem:{}){
     console.log("IndexedDBService:storeObject()")
-        let idxDB=indexedDB.open("ema")
+        let idxDB=indexedDB.open("<<DBNAme>>")
         idxDB.onerror=function(){
           console.log("IndexedDBService:storeObject(): error")
         }
@@ -58,10 +62,14 @@ export class IndexedDBService {
             db.close()
         }
   }//storeItem
-
+  /**
+   * Get Items in a Store by Key
+   * @param stroreName 
+   * @param key 
+   */
   public getStoreItemByKey(stroreName:string,key:any){
       return new Observable<any>((Observer)=>{
-          let idxDB=indexedDB.open("ema").onsuccess=function(){
+          let idxDB=indexedDB.open("<<DBNAme>>").onsuccess=function(){
                 let db=this.result
                 let transactionreq=db.transaction(stroreName,'readonly')
                 let idxStore=transactionreq.objectStore(stroreName)
@@ -71,10 +79,15 @@ export class IndexedDBService {
            }
       }).pipe(take(1));
   }
+  /**
+   * Get Items in a store using KeyRange
+   * @param stroreName 
+   * @param keyRange 
+   */
 
   public getStoreItemByKeyRange(stroreName:string,keyRange:IDBKeyRange){
     return new Observable<any>((Observer)=>{
-        let idxDB=indexedDB.open("ema").onsuccess=function(){
+        let idxDB=indexedDB.open("<<DBNAme>>").onsuccess=function(){
               let db=this.result
               let transactionreq=db.transaction(stroreName,'readonly')
               let idxStore=transactionreq.objectStore(stroreName)
@@ -84,9 +97,13 @@ export class IndexedDBService {
          }
     }).pipe(take(1));
   }
+  /**
+   * Get All Items in a Store 
+   * @param stroreName 
+   */
   public getStoreAllItem(stroreName:string){
     return new Observable<any>((Observer)=>{
-        let idxDB=indexedDB.open("ema").onsuccess=function(){
+        let idxDB=indexedDB.open("<<DBNAme>>").onsuccess=function(){
               let db=this.result
               let transactionreq=db.transaction(stroreName,'readonly')
               let idxStore=transactionreq.objectStore(stroreName)
@@ -104,7 +121,7 @@ export class IndexedDBService {
    */
   public getStoreItemByIndexKeyRange(stroreName:string,indexName:string,inxedkeyRange:IDBKeyRange){
     return new Observable<any>((Observer)=>{
-        let idxDB=indexedDB.open("ema").onsuccess=function(){
+        let idxDB=indexedDB.open("<<DBNAme>>").onsuccess=function(){
               let db=this.result
               let transactionreq=db.transaction(stroreName,'readonly')
               let idxStoreIndex=transactionreq.objectStore(stroreName).index(indexName)
@@ -123,7 +140,7 @@ export class IndexedDBService {
 
   public getStoreItemByIndexAll(stroreName:string,indexName:string){
     return new Observable<any>((Observer)=>{
-        let idxDB=indexedDB.open("ema").onsuccess=function(){
+        let idxDB=indexedDB.open("<<DBNAme>>").onsuccess=function(){
               let db=this.result
               let transactionreq=db.transaction(stroreName,'readonly')
               let idxStoreIndex=transactionreq.objectStore(stroreName).index(indexName)
@@ -141,7 +158,7 @@ export class IndexedDBService {
 
   public getStorekeys(stroreName:string){
     return new Observable<any>((Observer)=>{
-        let idxDB=indexedDB.open("ema").onsuccess=function(){
+        let idxDB=indexedDB.open("<<DBNAme>>").onsuccess=function(){
               let db=this.result
               let transactionreq=db.transaction(stroreName,'readwrite')
               let idxStore=transactionreq.objectStore(stroreName)
